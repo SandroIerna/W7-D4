@@ -148,22 +148,23 @@
         document.getElementById("price").value = product.price;
       };
 
-      const productDelete = async () => {
-        const hasAccepted = confirm("do you really want to delete this?");
-        if (hasAccepted) {
-          let data = await fetch(
-            "https://striveschool-api.herokuapp.com/api/product/",
-            {
-              method: "DELETE",
-              headers: headers,
-            }
-          );
-          //   if (data.ok) {
-          //     alert("Event DELETED");
-          //     window.location.assign("./index.html");
-          //   }
-        }
-      };
+      //   const productDelete = async () => {
+      //     const hasAccepted = confirm("do you really want to delete this?");
+      //     if (hasAccepted) {
+      //       let data = await fetch(
+      //         "https://striveschool-api.herokuapp.com/api/product/",
+      //         {
+      //           method: "DELETE",
+      //           headers: headers,
+      //         }
+      //       );
+      //         if (data.ok) {
+      //           alert("Event DELETED");
+      //           window.location.assign("./index.html");
+      //         }
+      //     }
+      //   };
+
       window.onload = async () => {
         await productDisplay();
       };
