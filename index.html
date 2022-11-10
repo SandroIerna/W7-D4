@@ -31,7 +31,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/"
+            <a class="nav-link" href="./index.html"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
@@ -43,74 +43,18 @@
     </nav>
 
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <h2 class="mt-5 mb-3">Backoffice</h2>
-          <form onsubmit="handleSubmit(event)">
-            <div class="form-group">
-              <label for="name">Product Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                aria-describedby="name input"
-                placeholder="Insert the Product name"
-                required
-              />
+      <div id="products-displayed" class="row">
+        <div class="col-3">
+          <div class="card">
+            <img src="..." class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Name</h5>
+              <p class="card-text">Description</p>
+              <p class="card-text">Brand</p>
+              <p class="card-text">Price</p>
+              <a href="#" class="btn btn-primary">More Info</a>
             </div>
-            <div class="form-group">
-              <label for="description">Product Description</label>
-              <textarea
-                class="form-control"
-                name="description"
-                id="description"
-                rows="6"
-                placeholder="Add the Product description"
-                required
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <label for="name">Product Brand</label>
-              <input
-                type="text"
-                class="form-control"
-                id="product-brand"
-                aria-describedby="name input"
-                placeholder="Insert the Product Brand"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="name">Image src</label>
-              <input
-                type="text"
-                class="form-control"
-                id="image-src"
-                aria-describedby="name input"
-                placeholder="Insert the Image source"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="price">Product Price</label>
-              <input
-                type="number"
-                class="form-control"
-                id="price"
-                aria-describedby="price input"
-                placeholder="Insert the Product price"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">
-              <span
-                class="spinner-border spinner-border-sm d-none"
-                role="status"
-                aria-hidden="true"
-              ></span>
-              Submit
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -126,5 +70,39 @@
       crossorigin="anonymous"
     ></script>
     <script src="./script.js"></script>
+    <script>
+      let row = document.getElementById("products-displayed");
+
+      let loadProducts = async () => {
+        let data = await fetch(
+          "https://striveschool-api.herokuapp.com/api/product/",
+          {
+            method: "GET",
+            headers: headers,
+          }
+        );
+        let products = await data.json();
+        console.log(products);
+        products.forEach((product) => {
+          row.innerHTML += `
+          <div class="col-3 my-3">
+          <div class="card">
+            <img src="${product.imageUrl}" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Name: ${product.name}</h5>
+              <p class="card-text">Description: ${product.description}</p>
+              <p class="card-text">Brand: ${product.brand}</p>
+              <p class="card-text">Price:${product.price}</p>
+              <a href="./details.html?product_id=${product._id}" class="btn btn-primary">More Info</a>
+            </div>
+          </div>
+        </div>`;
+        });
+      };
+
+      window.onload = async () => {
+        await loadProducts();
+      };
+    </script>
   </body>
 </html>
